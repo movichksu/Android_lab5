@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="backgroundTint">@color/purple</item>
+        <item name="android:paddingVertical">@dimen/indent_10</item>
+        <item name="cornerRadius">@dimen/button_radius</item>
+    </style>
+
+    <style name="InputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginVertical">@dimen/indent_10</item>
+    </style>
+
+    <style name="InputLayoutStyle.Edit" parent="InputLayoutStyle">
+        <item name="android:focusable">false</item>
+        <item name="endIconDrawable">@drawable/ic_pencil</item>
+        <item name="endIconMode">custom</item>
+    </style>
+
+    <style name="EditText.Uneditable" parent="Widget.AppCompat.EditText">
+        <item name="android:focusable">false</item>
+        <item name="android:inputType">textNoSuggestions</item>
+    </style>
+</resources>

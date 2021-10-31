@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Лабораторная - Данные пользователя</string>
+    <string name="surname">Фамилия</string>
+    <string name="name">Имя</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="comment">Комментарий</string>
+    <string name="user_name_form">Форма Имени</string>
+    <string name="address_form">Форма адреса</string>
+    <string name="comment_form">Форма комментария</string>
+    <string name="address">Адрес</string>
+    <string name="country">Страна</string>
+    <string name="town">Город</string>
+</resources>
