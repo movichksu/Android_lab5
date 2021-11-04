@@ -4,15 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
-import com.example.android_lab4.ui.model.FieldContent
 import com.example.android_lab4.ui.model.FieldType
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class UserNameFormActivity : AppCompatActivity() {
 
@@ -35,13 +32,29 @@ class UserNameFormActivity : AppCompatActivity() {
         }
 
         saveButton.setOnClickListener {
-            val nameFieldContent =
-                FieldContent(FieldType.NAME_FIELD, "${nameEditText.text} ${surnameEditText.text}")
-            val serializedName = Json.encodeToString(nameFieldContent)
+            if (!validateFields()) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.error_toast),
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+                return@setOnClickListener
+            }
+            val nameFieldContent = "${nameEditText.text} ${surnameEditText.text}"
             val intent = Intent()
-            intent.putExtras(bundleOf(Constants.RESULT to serializedName))
+            intent.putExtras(bundleOf(Constants.RESULT_CONTENT to nameFieldContent))
+            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.NAME_FIELD))
             setResult(RESULT_OK, intent)
             finish()
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        return when {
+            nameEditText.text.isNullOrEmpty() -> false
+            surnameEditText.text.isNullOrEmpty() -> false
+            else -> true
         }
     }
 }

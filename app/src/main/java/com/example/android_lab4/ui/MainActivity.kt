@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.android_lab4.R
-import com.example.android_lab4.constants.Constants.RESULT
-import com.example.android_lab4.ui.model.FieldContent
+import com.example.android_lab4.constants.Constants.RESULT_CONTENT
+import com.example.android_lab4.constants.Constants.RESULT_TYPE
 import com.example.android_lab4.ui.model.FieldType
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
@@ -27,19 +25,16 @@ class MainActivity : AppCompatActivity() {
     private val someActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                val data = result.data?.getStringExtra(RESULT)
-                if (data != null) {
-                    val fieldContent = Json.decodeFromString(data) as FieldContent
-                    when (fieldContent.fieldType) {
-                        FieldType.NAME_FIELD -> nameEditText.setText(fieldContent.content)
-                        FieldType.ADDRESS_FIELD -> addressEditText.setText(fieldContent.content)
-                        FieldType.COMMENT_FIELD -> commentEditText.setText(fieldContent.content)
-                    }
-                } else throw Exception()
-            }
-            RESULT_CANCELED -> { }
+        if (result.resultCode == RESULT_OK) {
+            val fieldType = result.data?.getSerializableExtra(RESULT_TYPE)
+            val fieldContent = result.data?.getStringExtra(RESULT_CONTENT)
+            if (fieldType != null) {
+                when (fieldType) {
+                    FieldType.NAME_FIELD -> nameEditText.setText(fieldContent)
+                    FieldType.ADDRESS_FIELD -> addressEditText.setText(fieldContent)
+                    FieldType.COMMENT_FIELD -> commentEditText.setText(fieldContent)
+                }
+            } else throw Exception()
         }
     }
 

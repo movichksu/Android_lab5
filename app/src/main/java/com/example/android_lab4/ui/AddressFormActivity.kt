@@ -4,14 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
-import com.example.android_lab4.ui.model.FieldContent
 import com.example.android_lab4.ui.model.FieldType
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 class AddressFormActivity : AppCompatActivity() {
 
@@ -36,16 +34,31 @@ class AddressFormActivity : AppCompatActivity() {
         }
 
         saveButton.setOnClickListener {
-            val addressFieldContent =
-                FieldContent(
-                    FieldType.ADDRESS_FIELD,
-                    "${countryEditText.text}, ${townEditText.text}, ${addressEditText.text}"
+            if (!validateFields()) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.error_toast),
+                    Toast.LENGTH_LONG
                 )
-            val serializedAddress = Json.encodeToString(addressFieldContent)
+                    .show()
+                return@setOnClickListener
+            }
+            val addressFieldContent =
+                    "${countryEditText.text}, ${townEditText.text}, ${addressEditText.text}"
             val intent = Intent()
-            intent.putExtras(bundleOf(Constants.RESULT to serializedAddress))
+            intent.putExtras(bundleOf(Constants.RESULT_CONTENT to addressFieldContent))
+            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.ADDRESS_FIELD))
             setResult(RESULT_OK, intent)
             finish()
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        return when {
+            countryEditText.text.isNullOrEmpty() -> false
+            townEditText.text.isNullOrEmpty() -> false
+            addressEditText.text.isNullOrEmpty() -> false
+            else -> true
         }
     }
 }

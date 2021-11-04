@@ -12,4 +12,5 @@
     <string name="address">Адрес</string>
     <string name="country">Страна</string>
     <string name="town">Город</string>
+    <string name="error_toast">Пожалуйста, заполните все поля!</string>
 </resources>
