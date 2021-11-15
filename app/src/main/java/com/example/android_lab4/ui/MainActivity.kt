@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.android_lab4.R
@@ -56,6 +59,21 @@ class MainActivity : AppCompatActivity() {
         }
         commentInputLayout.setEndIconOnClickListener {
             launchActivity(CommentFormActivity::class.java)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.exit -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

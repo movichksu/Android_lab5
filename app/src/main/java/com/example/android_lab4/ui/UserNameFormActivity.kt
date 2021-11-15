@@ -2,6 +2,8 @@ package com.example.android_lab4.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -47,6 +49,22 @@ class UserNameFormActivity : AppCompatActivity() {
             intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.NAME_FIELD))
             setResult(RESULT_OK, intent)
             finish()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.form_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.cancel -> {
+                setResult(RESULT_CANCELED)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

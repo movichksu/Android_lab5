@@ -2,6 +2,8 @@ package com.example.android_lab4.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -43,14 +45,34 @@ class AddressFormActivity : AppCompatActivity() {
                     .show()
                 return@setOnClickListener
             }
-            val addressFieldContent =
-                    "${countryEditText.text}, ${townEditText.text}, ${addressEditText.text}"
-            val intent = Intent()
-            intent.putExtras(bundleOf(Constants.RESULT_CONTENT to addressFieldContent))
-            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.ADDRESS_FIELD))
-            setResult(RESULT_OK, intent)
-            finish()
+            finishIntentWithResult()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.form_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.cancel -> {
+                setResult(RESULT_CANCELED)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun finishIntentWithResult() {
+        val addressFieldContent =
+            "${countryEditText.text}, ${townEditText.text}, ${addressEditText.text}"
+        val intent = Intent()
+        intent.putExtras(bundleOf(Constants.RESULT_CONTENT to addressFieldContent))
+        intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.ADDRESS_FIELD))
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     private fun validateFields(): Boolean {
