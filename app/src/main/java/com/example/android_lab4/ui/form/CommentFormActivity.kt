@@ -1,4 +1,4 @@
-package com.example.android_lab4.ui
+package com.example.android_lab4.ui.form
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,22 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
+import com.example.android_lab4.constants.Constants.RESULT_CONTENT
+import com.example.android_lab4.ui.dialog.DialogFragment
+import com.example.android_lab4.ui.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 
-class AddressFormActivity : AppCompatActivity() {
+class CommentFormActivity : AppCompatActivity(), PositiveClickListener {
 
-    private lateinit var countryEditText: EditText
-    private lateinit var townEditText: EditText
-    private lateinit var addressEditText: EditText
+    private lateinit var commentEditText: EditText
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_address_form)
-        countryEditText = findViewById(R.id.countryEditText)
-        addressEditText = findViewById(R.id.addressEditText)
-        townEditText = findViewById(R.id.townEditText)
+        setContentView(R.layout.activity_comment_form)
+        commentEditText = findViewById(R.id.commentEditText)
         saveButton = findViewById(R.id.saveButton)
         cancelButton = findViewById(R.id.cancelButton)
 
@@ -45,7 +44,12 @@ class AddressFormActivity : AppCompatActivity() {
                     .show()
                 return@setOnClickListener
             }
-            finishIntentWithResult()
+            val commentFieldContent = commentEditText.text.toString()
+            val intent = Intent()
+            intent.putExtras(bundleOf(RESULT_CONTENT to commentFieldContent))
+            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.COMMENT_FIELD))
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 
@@ -55,32 +59,24 @@ class AddressFormActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.cancel -> {
-                setResult(RESULT_CANCELED)
-                finish()
+                DialogFragment().show(supportFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun finishIntentWithResult() {
-        val addressFieldContent =
-            "${countryEditText.text}, ${townEditText.text}, ${addressEditText.text}"
-        val intent = Intent()
-        intent.putExtras(bundleOf(Constants.RESULT_CONTENT to addressFieldContent))
-        intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.ADDRESS_FIELD))
-        setResult(RESULT_OK, intent)
-        finish()
-    }
-
     private fun validateFields(): Boolean {
         return when {
-            countryEditText.text.isNullOrEmpty() -> false
-            townEditText.text.isNullOrEmpty() -> false
-            addressEditText.text.isNullOrEmpty() -> false
+            commentEditText.text.isNullOrEmpty() -> false
             else -> true
         }
+    }
+
+    override fun onPositive() {
+        setResult(RESULT_CANCELED)
+        finish()
     }
 }

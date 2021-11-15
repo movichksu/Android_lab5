@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android_lab4">
         <activity
-            android:name=".ui.UserNameFormActivity"
+            android:name=".ui.form.UserNameFormActivity"
             android:label="@string/user_name_form"
             android:exported="true"/>
         <activity
-            android:name=".ui.AddressFormActivity"
+            android:name=".ui.form.AddressFormActivity"
             android:label="@string/address_form"
             android:exported="true"/>
         <activity
-            android:name=".ui.CommentFormActivity"
+            android:name=".ui.form.CommentFormActivity"
             android:label="@string/comment_form"
             android:exported="true"/>
         <activity

@@ -12,5 +12,7 @@
     <string name="country">Country</string>
     <string name="town">Town</string>
     <string name="exit">Exit</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
     <string name="error_toast">Please, specify all fields!</string>
 </resources>

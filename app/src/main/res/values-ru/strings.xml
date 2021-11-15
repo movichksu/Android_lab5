@@ -13,5 +13,7 @@
     <string name="country">Страна</string>
     <string name="town">Город</string>
     <string name="exit">Выход</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="error_toast">Пожалуйста, заполните все поля!</string>
 </resources>

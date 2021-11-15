@@ -1,4 +1,4 @@
-package com.example.android_lab4.ui
+package com.example.android_lab4.ui.form
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,19 +11,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
-import com.example.android_lab4.constants.Constants.RESULT_CONTENT
+import com.example.android_lab4.ui.dialog.DialogFragment
+import com.example.android_lab4.ui.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 
-class CommentFormActivity : AppCompatActivity() {
+class UserNameFormActivity : AppCompatActivity(), PositiveClickListener {
 
-    private lateinit var commentEditText: EditText
+    private lateinit var nameEditText: EditText
+    private lateinit var surnameEditText: EditText
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comment_form)
-        commentEditText = findViewById(R.id.commentEditText)
+        setContentView(R.layout.activity_name_form)
+        nameEditText = findViewById(R.id.nameEditText)
+        surnameEditText = findViewById(R.id.surnameEditText)
         saveButton = findViewById(R.id.saveButton)
         cancelButton = findViewById(R.id.cancelButton)
 
@@ -42,10 +45,10 @@ class CommentFormActivity : AppCompatActivity() {
                     .show()
                 return@setOnClickListener
             }
-            val commentFieldContent = commentEditText.text.toString()
+            val nameFieldContent = "${nameEditText.text} ${surnameEditText.text}"
             val intent = Intent()
-            intent.putExtras(bundleOf(RESULT_CONTENT to commentFieldContent))
-            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.COMMENT_FIELD))
+            intent.putExtras(bundleOf(Constants.RESULT_CONTENT to nameFieldContent))
+            intent.putExtras(bundleOf(Constants.RESULT_TYPE to FieldType.NAME_FIELD))
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -57,10 +60,9 @@ class CommentFormActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        return when(item.itemId) {
             R.id.cancel -> {
-                setResult(RESULT_CANCELED)
-                finish()
+                DialogFragment().show(supportFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -69,8 +71,14 @@ class CommentFormActivity : AppCompatActivity() {
 
     private fun validateFields(): Boolean {
         return when {
-            commentEditText.text.isNullOrEmpty() -> false
+            nameEditText.text.isNullOrEmpty() -> false
+            surnameEditText.text.isNullOrEmpty() -> false
             else -> true
         }
+    }
+
+    override fun onPositive() {
+        setResult(RESULT_CANCELED)
+        finish()
     }
 }

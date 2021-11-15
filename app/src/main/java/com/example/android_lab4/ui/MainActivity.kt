@@ -5,18 +5,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants.RESULT_CONTENT
 import com.example.android_lab4.constants.Constants.RESULT_TYPE
+import com.example.android_lab4.ui.dialog.DialogFragment
+import com.example.android_lab4.ui.form.AddressFormActivity
+import com.example.android_lab4.ui.form.CommentFormActivity
+import com.example.android_lab4.ui.form.UserNameFormActivity
+import com.example.android_lab4.ui.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 import com.google.android.material.textfield.TextInputLayout
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PositiveClickListener {
 
     private lateinit var nameEditText: EditText
     private lateinit var addressEditText: EditText
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.exit -> {
-                finish()
+                DialogFragment().show(supportFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -80,5 +84,9 @@ class MainActivity : AppCompatActivity() {
     private fun launchActivity(activityClass: Class<out Activity>) {
         val intent = Intent(this@MainActivity, activityClass)
         someActivityResultLauncher.launch(intent)
+    }
+
+    override fun onPositive() {
+        finish()
     }
 }
