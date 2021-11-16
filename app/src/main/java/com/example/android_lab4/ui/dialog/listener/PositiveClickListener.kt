@@ -1,4 +1,4 @@
-package com.example.android_lab4.ui.listener
+package com.example.android_lab4.ui.dialog.listener
 
 interface PositiveClickListener {
 

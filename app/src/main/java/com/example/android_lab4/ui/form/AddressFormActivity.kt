@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
-import com.example.android_lab4.ui.dialog.DialogFragment
-import com.example.android_lab4.ui.listener.PositiveClickListener
+import com.example.android_lab4.ui.dialog.AlternativeDialogFragment
+import com.example.android_lab4.ui.dialog.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 
 class AddressFormActivity : AppCompatActivity(), PositiveClickListener {
@@ -33,8 +33,7 @@ class AddressFormActivity : AppCompatActivity(), PositiveClickListener {
         cancelButton = findViewById(R.id.cancelButton)
 
         cancelButton.setOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+            onCancelPressed()
         }
 
         saveButton.setOnClickListener {
@@ -59,11 +58,20 @@ class AddressFormActivity : AppCompatActivity(), PositiveClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.cancel -> {
-                DialogFragment().show(supportFragmentManager)
+                onCancelPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun onCancelPressed() {
+        AlternativeDialogFragment
+            .createInstance(
+                getString(R.string.cancel_form),
+                getString(R.string.are_you_sure_you_want_cancel)
+            )
+            .show(supportFragmentManager)
     }
 
     private fun finishIntentWithResult() {
@@ -78,9 +86,9 @@ class AddressFormActivity : AppCompatActivity(), PositiveClickListener {
 
     private fun validateFields(): Boolean {
         return when {
-            countryEditText.text.isNullOrEmpty() -> false
-            townEditText.text.isNullOrEmpty() -> false
-            addressEditText.text.isNullOrEmpty() -> false
+            countryEditText.text.isNullOrBlank() -> false
+            townEditText.text.isNullOrBlank() -> false
+            addressEditText.text.isNullOrBlank() -> false
             else -> true
         }
     }

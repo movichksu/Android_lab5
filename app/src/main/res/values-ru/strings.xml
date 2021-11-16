@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Лабораторная - Данные пользователя</string>
+    <string name="app_name">Лабораторная - Данные пользователя 2.0</string>
     <string name="surname">Фамилия</string>
     <string name="name">Имя</string>
     <string name="save">Сохранить</string>
@@ -13,6 +13,10 @@
     <string name="country">Страна</string>
     <string name="town">Город</string>
     <string name="exit">Выход</string>
+    <string name="close_app">Закрыть приложение</string>
+    <string name="cancel_form">Cancel form</string>
+    <string name="are_you_sure_you_want_cancel">Вы уверены, что хотите выйти из формы?</string>
+    <string name="are_you_sure_you_want_exit">Вы уверены, что хотетие выйти из приложения?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="error_toast">Пожалуйста, заполните все поля!</string>

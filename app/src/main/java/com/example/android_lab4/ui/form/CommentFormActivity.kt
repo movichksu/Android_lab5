@@ -12,8 +12,8 @@ import androidx.core.os.bundleOf
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants
 import com.example.android_lab4.constants.Constants.RESULT_CONTENT
-import com.example.android_lab4.ui.dialog.DialogFragment
-import com.example.android_lab4.ui.listener.PositiveClickListener
+import com.example.android_lab4.ui.dialog.AlternativeDialogFragment
+import com.example.android_lab4.ui.dialog.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 
 class CommentFormActivity : AppCompatActivity(), PositiveClickListener {
@@ -30,8 +30,7 @@ class CommentFormActivity : AppCompatActivity(), PositiveClickListener {
         cancelButton = findViewById(R.id.cancelButton)
 
         cancelButton.setOnClickListener {
-            setResult(RESULT_CANCELED)
-            finish()
+            onCancelPressed()
         }
 
         saveButton.setOnClickListener {
@@ -61,16 +60,25 @@ class CommentFormActivity : AppCompatActivity(), PositiveClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.cancel -> {
-                DialogFragment().show(supportFragmentManager)
+                onCancelPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
+    private fun onCancelPressed() {
+        AlternativeDialogFragment
+            .createInstance(
+                getString(R.string.cancel_form),
+                getString(R.string.are_you_sure_you_want_cancel)
+            )
+            .show(supportFragmentManager)
+    }
+
     private fun validateFields(): Boolean {
         return when {
-            commentEditText.text.isNullOrEmpty() -> false
+            commentEditText.text.isNullOrBlank() -> false
             else -> true
         }
     }

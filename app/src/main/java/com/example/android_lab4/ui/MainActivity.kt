@@ -11,11 +11,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.android_lab4.R
 import com.example.android_lab4.constants.Constants.RESULT_CONTENT
 import com.example.android_lab4.constants.Constants.RESULT_TYPE
-import com.example.android_lab4.ui.dialog.DialogFragment
+import com.example.android_lab4.ui.dialog.AlternativeDialogFragment
 import com.example.android_lab4.ui.form.AddressFormActivity
 import com.example.android_lab4.ui.form.CommentFormActivity
 import com.example.android_lab4.ui.form.UserNameFormActivity
-import com.example.android_lab4.ui.listener.PositiveClickListener
+import com.example.android_lab4.ui.dialog.listener.PositiveClickListener
 import com.example.android_lab4.ui.model.FieldType
 import com.google.android.material.textfield.TextInputLayout
 import java.lang.Exception
@@ -74,7 +74,12 @@ class MainActivity : AppCompatActivity(), PositiveClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.exit -> {
-                DialogFragment().show(supportFragmentManager)
+                AlternativeDialogFragment
+                    .createInstance(
+                        getString(R.string.close_app),
+                        getString(R.string.are_you_sure_you_want_exit)
+                    )
+                    .show(supportFragmentManager)
                 true
             }
             else -> super.onOptionsItemSelected(item)

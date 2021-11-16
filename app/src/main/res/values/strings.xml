@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android lab4</string>
+    <string name="app_name">Android lab5</string>
     <string name="surname">Surname</string>
     <string name="name">Name</string>
     <string name="save">Save</string>
@@ -12,6 +12,10 @@
     <string name="country">Country</string>
     <string name="town">Town</string>
     <string name="exit">Exit</string>
+    <string name="close_app">Close app</string>
+    <string name="cancel_form">Cancel form</string>
+    <string name="are_you_sure_you_want_cancel">Are you sure you want to cancel this form?</string>
+    <string name="are_you_sure_you_want_exit">Are you sure you want close the app?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="error_toast">Please, specify all fields!</string>
